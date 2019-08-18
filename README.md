@@ -1,5 +1,5 @@
 # Bussing back
 
-A game created for the 2019 js13k competition.
+A bus-themed adventure for the 2019 js13k competition.
 
-(still in development!)
+created by Frank Lai, Julian Will, and clocks-in-a-cooler.
