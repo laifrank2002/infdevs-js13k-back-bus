@@ -3,7 +3,14 @@ var canvas, context;
 var width = window.innerWidth, height = window.innerHeight;
 
 function init() {
+	
+	let splash = document.querySelector('#splash-screen');
+	splash.style.display = 'none';
+	
     canvas = document.querySelector("canvas");
+	
+	canvas.style.visibility = 'visible';
+	
     context = canvas.getContext("2d");
     
     canvas.width = width;
@@ -11,6 +18,11 @@ function init() {
 
     canvas.addEventListener("click", click);
     canvas.addEventListener("mousemove", mousemove);
+	
+	generate_clickable();
+	generate_clickable();
+
+	requestAnimationFrame(animate);
 }
 
 //the goal: get clicking on the canvas, then novering tooltips.
@@ -116,8 +128,5 @@ function click(e) {
 function mousemove(e) {
     cursor = [e.clientX, e.clientY];
 }
-
-generate_clickable();
-generate_clickable();
 
 requestAnimationFrame(animate);

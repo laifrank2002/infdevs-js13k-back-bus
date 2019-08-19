@@ -3,7 +3,8 @@ html, body {
 }
 
 #splash-screen {
-    visibility: hidden;
+   /*visibility: hidden;*/
+	text-align: center;
 }
 
 #end-screen {
@@ -11,7 +12,7 @@ html, body {
 }
 
 canvas {
-    position: absolute;
+    /*position: absolute;*/
     top: 0px;
     left: 0px;
     background-color: aqua; /*for now*/
