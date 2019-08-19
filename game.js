@@ -17,13 +17,25 @@ function init() {
 
 //objects to click
 var objects = [];
+/*
+    FOR EACH OBJECT ON THE SCREEN:
+    
+    index | description
+    ------+-------------------
+       0  | x coordinate
+       1  | y coordinate
+       2  | width
+       3  | height
+       4  | active (boolean)
+       5  | mouseover text
+*/
 
 //for now, generate stuff to click on
 function generate_clickable() {
     var x = Math.floor(Math.random() * width), y = Math.floor(Math.random() * height);
     var w = Math.floor(Math.random() * 50) + 50, h = Math.floor(Math.random() * 50) + 50;
     
-    objects.push([x, y, w, h, true]);
+    objects.push([x, y, w, h, true, "(" + x + ", " + y + ")"]);
 }
 
 //animation related
@@ -41,7 +53,6 @@ function animate(time) {
     //clear the screen
     context.clearRect(0, 0, width, height);
     
-    //get rid of what's not active (index 4)
     objects = objects.filter(obj => {return obj[4];});
     
     objects.forEach(obj => {
@@ -49,10 +60,36 @@ function animate(time) {
         context.fillRect(obj[0], obj[1], obj[2], obj[3]);
     });
     
+    //get the object that the mouse is hovering over
+    for (var i = objects.length - 1; i >= 0; i--) {
+        var obj = objects[i];
+        
+        if (cursor[0] > obj[0] &&
+            cursor[0] < obj[0] + obj[2] &&
+            cursor[1] > obj[1] &&
+            cursor[1] < obj[1] + obj[3]
+        ) {
+            context.font = "Arial";
+            context.fillStyle = "black";
+            context.textAlign = "center";
+            context.fillText(obj[5], obj[0], obj[1] - 30);
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.beginPath();
+            context.moveTo(obj[0], obj[1]);
+            context.lineTo(obj[0], obj[1] - 30);
+            context.closePath();
+            context.stroke();
+            break;
+        }
+    }
+    
     requestAnimationFrame(animate);
 }
 
 //event handling
+
+// format: [x, y]
 var cursor = [0, 0];
 function click(e) {
     //for now
