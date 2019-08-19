@@ -4,16 +4,16 @@ html, body {
 
 #splash-screen {
    /*visibility: hidden;*/
-	text-align: center;
+    text-align: center;
 }
 
 #end-screen {
-    visibility: hidden;
+    display: none;
 }
 
 canvas {
-    /*position: absolute;*/
-    top: 0px;
-    left: 0px;
+    display: none;
+    position: absolute;
+    top: 0px; left: 0px;
     background-color: aqua; /*for now*/
 }
