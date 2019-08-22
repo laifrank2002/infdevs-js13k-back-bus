@@ -83,12 +83,12 @@ function animate(time) {
             context.font = "Arial";
             context.fillStyle = "black";
             context.textAlign = "center";
-            context.fillText(obj[5], obj[0], obj[1] - 30);
+            context.fillText(obj[5], obj[0] + (obj[2] / 2), obj[1] - 30);
             context.strokeStyle = "black";
             context.lineWidth = 2;
             context.beginPath();
-            context.moveTo(obj[0], obj[1]);
-            context.lineTo(obj[0], obj[1] - 30);
+            context.moveTo(obj[0] + (obj[2] / 2), obj[1]);
+            context.lineTo(obj[0] + (obj[2] / 2), obj[1] - 30);
             context.closePath();
             context.stroke();
             break;
