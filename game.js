@@ -17,14 +17,22 @@ function init() {
 
     canvas.addEventListener("click", click);
     canvas.addEventListener("mousemove", mousemove);
-    
-    generate_clickable();
-    generate_clickable();
 
     requestAnimationFrame(animate);
 }
 
-//the goal: get clicking on the canvas, then novering tooltips.
+//the goal: get some roads and buses on the scene.
+
+//game state related
+var position = [0, 0]; //format: [x, y]
+var scale    = 500; //only applies to the map.
+var state    = "not playing";
+
+function start_game() {
+    //randomly generate the stops, place the player somewhere and give them a goal.
+
+    //place the player
+}
 
 //objects to click
 var objects = [];
@@ -38,16 +46,10 @@ var objects = [];
        2  | width
        3  | height
        4  | active (boolean)
-       5  | mouseover text
+       5  | is it clickable? (function)
+       6  | action when clicked (function)
+       7  | mouseover text
 */
-
-//for now, generate stuff to click on
-function generate_clickable() {
-    var x = Math.floor(Math.random() * width), y = Math.floor(Math.random() * height);
-    var w = Math.floor(Math.random() * 50) + 50, h = Math.floor(Math.random() * 50) + 50;
-    
-    objects.push([x, y, w, h, true, "(" + x + ", " + y + ")"]);
-}
 
 //animation related
 var last_time = null, lapse = 0;
@@ -67,8 +69,7 @@ function animate(time) {
     objects = objects.filter(obj => {return obj[4];});
     
     objects.forEach(obj => {
-        context.fillStyle = "rgba(0, 0, 0, .3)";
-        context.fillRect(obj[0], obj[1], obj[2], obj[3]);
+        //fill in later
     });
     
     //get the object that the mouse is hovering over
@@ -78,12 +79,13 @@ function animate(time) {
         if (cursor[0] > obj[0] &&
             cursor[0] < obj[0] + obj[2] &&
             cursor[1] > obj[1] &&
-            cursor[1] < obj[1] + obj[3]
+            cursor[1] < obj[1] + obj[3] &&
+            obj[5]()
         ) {
             context.font = "Arial";
             context.fillStyle = "black";
             context.textAlign = "center";
-            context.fillText(obj[5], obj[0] + (obj[2] / 2), obj[1] - 30);
+            context.fillText(obj[7], obj[0] + (obj[2] / 2), obj[1] - 30);
             context.strokeStyle = "black";
             context.lineWidth = 2;
             context.beginPath();
@@ -113,12 +115,10 @@ function click(e) {
         if (e.clientX > obj[0] &&
             e.clientX < obj[0] + obj[2] &&
             e.clientY > obj[1] &&
-            e.clientY < obj[1] + obj[3]
+            e.clientY < obj[1] + obj[3] &&
+            obj[5]()
         ) {
             obj[4] = false;
-            console.log("clicked on a black rectangle.");
-            //replace it.
-            generate_clickable();
             break;
         }
     }
@@ -127,3 +127,5 @@ function click(e) {
 function mousemove(e) {
     cursor = [e.clientX, e.clientY];
 }
+
+init();
